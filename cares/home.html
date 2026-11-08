@@ -197,6 +197,15 @@ a.area:hover .ago{opacity:1;color:var(--blue)}
   .f,.copy,.btn,a.mailshown{min-height:44px}
   .f,.copy{display:inline-flex;align-items:center}
 }
+/* jump links: on a click, scrollIntoView also scrolls the Google Sites page (Chrome; tested Nov 2026) */
+.jump{background:#fff;border-bottom:1px solid var(--line)}
+.jump .wrap{display:flex;gap:6px;align-items:center;padding-top:12px;padding-bottom:12px;overflow-x:auto}
+.jump span{font:600 11.5px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:6px;white-space:nowrap}
+.jump a{border:0;white-space:nowrap;font:500 13.5px/1 Inter,sans-serif;color:var(--blue-d);padding:8px 12px;border-radius:999px;background:var(--bg)}
+.jump a:hover{background:#eaf1fb}
+section[id]{scroll-margin-top:72px}
+@media (max-width:640px){.jump span{display:none}}
+@media (pointer:coarse){.jump a{min-height:44px;display:inline-flex;align-items:center}}
 </style>
 </head>
 <body>
@@ -222,6 +231,16 @@ a.area:hover .ago{opacity:1;color:var(--blue)}
     </a>
   </div>
 </div>
+
+<nav class="jump" aria-label="On this page">
+  <div class="wrap">
+    <span>On this page</span>
+    <a href="#research" target="_self">Research</a>
+    <a href="#news" target="_self">News</a>
+    <a href="#join" target="_self">Join us</a>
+    <a href="#contact" target="_self">Contact</a>
+  </div>
+</nav>
 
 <main class="wrap">
 
@@ -520,6 +539,11 @@ document.querySelectorAll('.showmail').forEach(function(b){
     a.href='mailto:'+v;a.textContent=v;a.className=b.className.replace('showmail','mailshown');
     b.parentNode.replaceChild(a,b);a.focus();
   });
+});
+/* jump links: on a click, scrollIntoView also scrolls the Google Sites page (Chrome; tested Nov 2026) */
+document.querySelectorAll('.jump a').forEach(function(a){
+  var t=document.querySelector(a.getAttribute('href'));if(t&&t.hidden)a.hidden=true;
+  a.addEventListener('click',function(e){var el=document.querySelector(a.getAttribute('href'));if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}});
 });
 </script>
 

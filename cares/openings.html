@@ -74,6 +74,10 @@ footer .wrap{display:flex;align-items:flex-start;justify-content:space-between;g
 /* ---------- openings ---------- */
 .roles{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:24px}
 .roles .r{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:4px 10px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;color:var(--blue-d);font:600 14px/1.25 Inter,sans-serif;box-shadow:var(--shadow)}
+.roles a.r{transition:transform .15s,border-color .15s}
+.roles a.r:hover{transform:translateY(-1px);border-color:#b9cde8;color:var(--blue-d)}
+.flash{box-shadow:0 0 0 3px var(--orange),var(--shadow)!important;transition:box-shadow .3s}
+[id]{scroll-margin-top:72px}
 .roles em{grid-column:2;font:600 11.5px/1 Inter,sans-serif;font-style:normal;color:var(--muted);white-space:nowrap}
 .dot{flex:none;width:9px;height:9px;border-radius:50%}
 .dot.open{background:#10b27f;box-shadow:0 0 0 4px rgba(16,178,127,.16)}
@@ -119,7 +123,7 @@ footer .wrap{display:flex;align-items:flex-start;justify-content:space-between;g
 }
 @media (max-width:520px){
   .wrap{padding:0 16px}
-  .roles{display:none} /* each card shows its own status; saves height on phones */
+  .roles{grid-template-columns:1fr 1fr}
   .ocard{padding:18px}.ohead{flex-wrap:wrap}.status{margin-left:54px}
   .join{padding:24px 20px}
   .flogos img{height:46px}
@@ -140,11 +144,11 @@ footer .wrap{display:flex;align-items:flex-start;justify-content:space-between;g
       <h1>Join Us!</h1>
       <p class="mission">We are looking for motivated individuals interested in modeling and simulation in the field of catalysis and reaction engineering.</p>
       <div class="roles">
-        <div class="r"><span class="dot open"></span>Postdoc (computational)<em>Open · rolling</em></div>
-        <div class="r"><span class="dot closed"></span>Postdoc (experimental)<em>No openings</em></div>
-        <div class="r"><span class="dot via"></span>Ph.D. candidates<em>Via admissions</em></div>
-        <div class="r"><span class="dot open"></span>M.Tech. students<em>IITB ChE</em></div>
-        <div class="r"><span class="dot open"></span>UG interns<em>Welcome</em></div>
+        <a class="r" href="#postdoc" target="_self"><span class="dot open"></span>Postdoc (computational)<em>Open · rolling</em></a>
+        <a class="r" href="#postdoc-exp" target="_self"><span class="dot closed"></span>Postdoc (experimental)<em>No openings</em></a>
+        <a class="r" href="#phd" target="_self"><span class="dot via"></span>Ph.D. candidates<em>Via admissions</em></a>
+        <a class="r" href="#mtech" target="_self"><span class="dot open"></span>M.Tech. students<em>IITB ChE</em></a>
+        <a class="r" href="#interns" target="_self"><span class="dot open"></span>UG interns<em>Welcome</em></a>
       </div>
     </div>
   </div>
@@ -242,6 +246,10 @@ document.querySelectorAll('.showmail').forEach(function(b){
     a.href='mailto:'+v;a.className=b.className.replace('showmail','shown');a.textContent=v;
     b.parentNode.replaceChild(a,b);a.focus();
   });
+});
+/* role tiles jump to their section; on a click this also scrolls the Google Sites page (Chrome; tested Nov 2026) */
+document.querySelectorAll('.roles a.r').forEach(function(a){
+  a.addEventListener('click',function(e){var el=document.querySelector(a.getAttribute('href'));if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('flash');setTimeout(function(){el.classList.remove('flash')},1400);}});
 });
 </script>
 

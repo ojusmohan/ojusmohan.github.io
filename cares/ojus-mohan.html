@@ -183,6 +183,15 @@ footer .fname{font:600 14px/1.4 Inter,sans-serif}
 @media (max-width:860px){.talks{flex-wrap:wrap;margin-top:0}.titems{grid-template-columns:1fr;flex-basis:100%;order:2}.thi{order:3}}
 .email-link{font-weight:600}
 @media (pointer:coarse){.copy{min-height:44px;padding:10px 16px;font-size:13px}.profiles a{width:48px;height:48px}.titem{min-height:44px;justify-content:center}}
+/* jump links: on a click, scrollIntoView also scrolls the Google Sites page (Chrome; tested Nov 2026) */
+.jump{background:#fff;border-bottom:1px solid var(--line)}
+.jump .wrap{display:flex;gap:6px;align-items:center;padding-top:12px;padding-bottom:12px;overflow-x:auto}
+.jump span{font:600 11.5px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:6px;white-space:nowrap}
+.jump a{border:0;white-space:nowrap;font:500 13.5px/1 Inter,sans-serif;color:var(--blue-d);padding:8px 12px;border-radius:999px;background:var(--bg)}
+.jump a:hover{background:#eaf1fb}
+section[id]{scroll-margin-top:72px}
+@media (max-width:640px){.jump span{display:none}}
+@media (pointer:coarse){.jump a{min-height:44px;display:inline-flex;align-items:center}}
 </style>
 </head>
 <body>
@@ -220,6 +229,18 @@ footer .fname{font:600 14px/1.4 Inter,sans-serif}
     </div>
   </div>
 </div>
+
+<nav class="jump" aria-label="On this page">
+  <div class="wrap">
+    <span>On this page</span>
+    <a href="#experience" target="_self">Experience</a>
+    <a href="#education" target="_self">Education</a>
+    <a href="#awards" target="_self">Awards</a>
+    <a href="#thesis" target="_self">Thesis</a>
+    <a href="#training" target="_self">Training</a>
+    <a href="#personal" target="_self">Personal</a>
+  </div>
+</nav>
 
 <main class="wrap">
 
@@ -387,6 +408,11 @@ footer .fname{font:600 14px/1.4 Inter,sans-serif}
     var a=document.createElement('a');a.className='email-link';a.href='mailto:'+v;a.textContent=v;
     b.replaceWith(a);a.focus();
   });})();
+/* jump links: on a click, scrollIntoView also scrolls the Google Sites page (Chrome; tested Nov 2026) */
+document.querySelectorAll('.jump a').forEach(function(a){
+  var t=document.querySelector(a.getAttribute('href'));if(t&&t.hidden)a.hidden=true;
+  a.addEventListener('click',function(e){var el=document.querySelector(a.getAttribute('href'));if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}});
+});
 </script>
 </body>
 </html>
