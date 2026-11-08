@@ -276,6 +276,12 @@ const PUBS = [
     venue:"ChemRxiv", details:"May 2026", url:"https://doi.org/10.26434/chemrxiv.15003921/v2",
     topics:["biomass","acid"] },
   { type:"article", year:2026, era:"iitb",
+    authors:"Shahla Karimpanakkal, Haseen Siddiqui, Swarit Dwivedi, Akshat Tanksale, Ojus Mohan*",
+    title:"Role of surface termination in CO₂ hydrogenation on Mo₂C: Mechanism and selectivity insights from first-principles and microkinetic modelling",
+    venue:"Journal of Catalysis", details:"117265", url:"https://doi.org/10.1016/j.jcat.2026.117265",
+    topics:["co2"], featured:true,
+    found:"DFT and microkinetic modeling show how the surface termination of Mo₂C steers the mechanism and selectivity of CO₂ hydrogenation." },
+  { type:"article", year:2026, era:"iitb",
     authors:"Saikat Saha, Sanjay Mahajani, A.K. Suresh, Ojus Mohan*",
     title:"Mechanistic insights into furfural conversion and product selectivity trends on transition metal surfaces using density functional theory and scaling relations",
     venue:"Molecular Catalysis", details:"601, 116173", url:"https://doi.org/10.1016/j.mcat.2026.116173",
@@ -284,7 +290,7 @@ const PUBS = [
     authors:"Haseen Siddiqui, Shrusti Kishor Borse, Shreya J., Sanjay Mahajani, Ojus Mohan*",
     title:"Temperature-dependent mechanistic insights into CO₂ hydrogenation to methanol on Cu(111): A DFT-assisted micro-kinetic study",
     venue:"Molecular Catalysis", details:"601, 116115", url:"https://doi.org/10.1016/j.mcat.2026.116115",
-    topics:["co2"], featured:true,
+    topics:["co2"],
     found:"DFT-assisted microkinetics shows how temperature shifts the pathways of CO₂ hydrogenation to methanol on copper." },
   { type:"article", year:2026, era:"iitb",
     authors:"Suranjana Banerjee, Ojus Mohan*, Abhijit Chatterjee*",
@@ -380,6 +386,7 @@ const HIGHLIGHT_IMAGES = [
    kind: "Oral" | "Poster"     award: optional text
    ===================================================================== */
 const TALKS = [
+  { year:2026, kind:"Poster", award:"Best Poster Award", authors:"Shahla Karimpanakkal, Haseen Siddiqui, Ojus Mohan", title:"Role of surface termination in CO₂ hydrogenation on Mo₂C: Mechanism and selectivity insights from first-principles and microkinetic modelling", event:"ADMD2026: Abu Dhabi School on Computational Materials Discovery, IIT Delhi – Abu Dhabi, UAE, Oct 2026", topics:["co2"] },
   { year:2026, kind:"Oral", award:"Best Paper Award", authors:"Saikat Saha, Sanjay Mahajani, A.K. Suresh, Ojus Mohan", title:"Mechanistic understanding of furan hydrogenation to tetrahydrofuran on transition-metal surfaces using density functional theory", event:"15th International Conference on Chemistry and Chemical Process (ICCCP), Tokyo, Japan, Mar 2026", topics:["biomass"] },
   { year:2025, kind:"Oral", authors:"Saikat Saha, Sanjay Mahajani, A.K. Suresh, Ojus Mohan", title:"Mechanistic insights into furfural conversion: A theoretical study on transition metals", event:"2025 AIChE Annual Meeting, Boston, USA", topics:["biomass"] },
   { year:2025, kind:"Oral", authors:"Suranjana Banerjee, Ojus Mohan, Abhijit Chatterjee", title:"On the thermodynamic stability of single-atom alloy catalysts: Surface segregation free energy trends from ab initio thermodynamic models", event:"2025 AIChE Annual Meeting, Boston, USA", topics:["saa"] },
@@ -409,7 +416,7 @@ const TALKS = [
   var TYPES=[['preprint','Preprints'],['article','Journal articles'],['patent','Patents'],['talk','Conference presentations']];
   var state={q:'',type:'article',topic:''};
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-  function sub(s){return esc(s).replace(/CO₂/g,'CO<sub>2</sub>').replace(/C₂/g,'C<sub>2</sub>')}
+  function sub(s){return esc(s).replace(/CO₂/g,'CO<sub>2</sub>').replace(/Mo₂C/g,'Mo<sub>2</sub>C').replace(/C₂/g,'C<sub>2</sub>')}
   function authors(a){return sub(a).replace(/Ojus Mohan(\*?)/g,'<b class="me">Ojus Mohan$1</b>')}
   function plain(s){return s.replace(/₂/g,'2')}
   function hay(o){return (o.title+' '+o.authors+' '+(o.venue||o.event||'')+' '+(o.details||'')+' '+o.year+' '+(o.topics||[]).map(function(t){return TOPICS[t]}).join(' ')).toLowerCase().replace(/₂/g,'2')}
