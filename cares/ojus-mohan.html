@@ -66,7 +66,13 @@ h1{margin:0;font:700 clamp(32px,4.6vw,48px)/1.1 "Source Serif 4",Cambria,serif;l
 .ico.iitb{background:#fff;border:0}
 
 /* past roles */
-.past-lbl{margin:0 0 14px 28px;font:600 12px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+details.more{margin:0}
+details.more>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;margin:0 0 18px 28px;font:600 13.5px/1 Inter,sans-serif;color:var(--blue);background:#fff;border:1px dashed #b9cde8;padding:10px 14px;border-radius:999px}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary:hover{background:#eaf1fb}
+details.more>summary .chev{transition:transform .2s}
+details.more[open]>summary .chev{transform:rotate(180deg)}
+@media (pointer:coarse){details.more>summary{min-height:44px}}
 .tl.first{margin-bottom:0}
 .tl.first>li{margin-bottom:14px}
 .tl.rest>li:first-child::before{background:#fff;border-color:var(--blue);box-shadow:none}
@@ -176,6 +182,7 @@ footer .fname{font:600 14px/1.4 Inter,sans-serif}
 .titems{flex:1;min-width:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
 .titem{border:0;display:flex;flex-direction:column;gap:2px;padding:4px 0 4px 14px;border-left:2px solid #f3e1d3;color:var(--ink)}
 .titem:hover{color:var(--ink)}
+.titem:only-child{grid-column:1/-1}
 .titem b{font:600 14.5px/1.3 Inter,sans-serif;color:var(--blue-d)}
 .titem:hover b{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
 .titem span{font:500 12.5px/1.4 Inter,sans-serif;color:var(--muted)}
@@ -222,7 +229,6 @@ section[id]{scroll-margin-top:72px}
     <div class="talks" id="talks">
       <span class="tpill"><span class="tdot"></span>Upcoming talks</span>
       <div class="titems">
-        <a class="titem" href="https://aixmat.candela.org.pl/" data-until="2026-11-26"><b>AI in Materials Research Summit</b><span>Warsaw, Poland · 24–26 Nov 2026</span></a>
         <a class="titem" href="https://www.icccu26.com/" data-until="2026-12-04"><b>Invited speaker · ICCCU-26</b><span>International Conference on Carbon Capture and Utilization · JNCASR Bengaluru · 30 Nov–4 Dec 2026</span></a>
       </div>
       <span class="thi">Say hi if you're there!</span>
@@ -272,7 +278,8 @@ section[id]{scroll-margin-top:72px}
         </div>
       </li>
     </ol>
-    <p class="past-lbl">Past roles</p>
+    <details class="more">
+      <summary>Past roles <span class="chev">▾</span></summary>
       <ol class="tl rest">
         <li class="card">
           <div class="job-head">
@@ -313,6 +320,7 @@ section[id]{scroll-margin-top:72px}
           </div>
         </li>
       </ol>
+    </details>
   </section>
 
   <section class="block" id="education">
