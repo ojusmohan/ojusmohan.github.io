@@ -41,9 +41,16 @@ h1{margin:0;font:700 clamp(32px,4.6vw,48px)/1.1 "Source Serif 4",Cambria,serif;l
 .hubfig svg{display:block;width:100%;height:auto}
 .hubfig figcaption{margin-top:6px;text-align:center;font:600 12px/1.2 Inter,sans-serif;color:var(--muted)}
 .hubsvg .nd{fill:#fff;stroke:#cfdcee;stroke-width:1.5;transition:fill .15s,stroke .15s}
-.hubsvg .hnode:hover .nd{fill:#f3f8ff;stroke:#1b5fb4}
+.hubsvg .hnode{cursor:pointer;outline:none}
+.hubsvg .hnode:hover .nd,.hubsvg .hnode:focus-visible .nd{fill:#f3f8ff;stroke:#1b5fb4}
+.hubfig{position:relative}
+.peek{position:absolute;left:0;right:0;top:calc(100% + 10px);z-index:20;max-height:620px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px -20px rgba(18,63,122,.55)}
+.peek .px{position:sticky;top:8px;float:right;margin:8px 8px 0 0;z-index:2;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--blue-d);font:600 16px/1 Inter,sans-serif;cursor:pointer}
+.peek .rarea{margin:0;border:0;box-shadow:none;grid-template-columns:minmax(0,1fr);grid-template-areas:"fig" "body" "papers";padding:18px}
+.peek .afig img,.peek .afig svg{max-height:220px}
+.peek .apapers ul{grid-template-columns:1fr}
 .hublist{display:none;list-style:none;margin:0;padding:0;gap:8px}
-.hublist li{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;color:var(--blue-d);font:600 14px/1.3 Inter,sans-serif}
+.hublist li{cursor:pointer;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;color:var(--blue-d);font:600 14px/1.3 Inter,sans-serif}
 .hublist b{display:block;font:700 11px/1 Inter,sans-serif;color:var(--orange);letter-spacing:.08em;margin-bottom:3px}
 .aico{flex:none;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:#eaf1fb;border:1px solid #d5e3f6;color:var(--blue)}
 .aico svg{width:22px;height:22px}
@@ -57,6 +64,8 @@ section.block{padding:40px 0 8px}
 
 /* area sections */
 .rarea{display:grid;grid-template-columns:.95fr 1.05fr;grid-template-areas:"fig body" "papers papers";gap:18px 36px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;margin-bottom:22px;position:relative;overflow:hidden}
+.rarea{scroll-margin-top:80px}
+.rarea.hit{box-shadow:0 0 0 3px var(--orange),var(--shadow)}
 .rarea::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--teal))}
 .rarea.flip{grid-template-columns:1.05fr .95fr;grid-template-areas:"body fig" "papers papers"}
 .afig{grid-area:fig;align-self:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;align-items:center;justify-content:center}
@@ -148,7 +157,7 @@ footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:2
         <li>DFT</li><li>Ab initio &amp; Car-Parrinello MD</li><li>MLIP</li><li>Microkinetic modeling</li><li>Multiscale modeling</li>
       </ul>
     </div>
-    <figure class="hubfig"><div id="hubmap"></div><figcaption>Our six research areas</figcaption></figure>
+    <figure class="hubfig"><div id="hubmap"></div><figcaption>Our six research areas · click one to jump to it</figcaption><div class="peek" id="peek" hidden></div></figure>
   </div>
 </div>
 
@@ -353,7 +362,7 @@ var SVGS={CO2:"<svg viewBox=\"0 0 420 320\" role=\"img\" aria-label=\"CO₂ and 
       '<text x="'+cx+'" y="'+(cy+41)+'" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0b6f5d">Microkinetics</text>';
     AREAS.forEach(function(a,i){
       var left=i<3, x=left?8:W-8-nw, y=ys[i%3];
-      svg+='<g class="hnode">'+
+      svg+='<g class="hnode" data-a="'+a.id+'" tabindex="0" role="link" aria-label="'+esc(SHORT[a.id])+'">'+
         '<rect class="nd" x="'+x+'" y="'+y+'" width="'+nw+'" height="'+nh+'" rx="14"/>'+
         '<circle cx="'+(x+32)+'" cy="'+(y+nh/2)+'" r="20" fill="#eaf1fb"/>'+
         '<g transform="translate('+(x+20)+' '+(y+nh/2-12)+')" fill="none" stroke="#1b5fb4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+ICON[a.id]+'</g>'+
@@ -362,7 +371,7 @@ var SVGS={CO2:"<svg viewBox=\"0 0 420 320\" role=\"img\" aria-label=\"CO₂ and 
         '<text x="'+(x+62)+'" y="'+(y+56)+'" font-size="13.5" font-weight="700" fill="#123f7a">'+st(LINES[a.id][1])+'</text>'+
         '</g>';
     });
-    var list='<ul class="hublist">'+AREAS.map(function(a,i){return '<li><span class="aico">'+ico(a.id)+'</span><span><b>0'+(i+1)+'</b>'+sub(SHORT[a.id])+'</span></li>'}).join('')+'</ul>';
+    var list='<ul class="hublist">'+AREAS.map(function(a,i){return '<li data-a="'+a.id+'" tabindex="0" role="link"><span class="aico">'+ico(a.id)+'</span><span><b>0'+(i+1)+'</b>'+sub(SHORT[a.id])+'</span></li>'}).join('')+'</ul>';
     document.getElementById('hubmap').innerHTML='<svg class="hubsvg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Our six research areas around computational catalysis" xmlns="http://www.w3.org/2000/svg" font-family="Inter,system-ui,sans-serif"><defs><linearGradient id="hg2" x1="0" x2="1"><stop offset="0" stop-color="#1b5fb4"/><stop offset="1" stop-color="#0ea58a"/></linearGradient></defs>'+svg+'</svg>'+list;
   })();
 
@@ -383,6 +392,31 @@ var SVGS={CO2:"<svg viewBox=\"0 0 420 320\" role=\"img\" aria-label=\"CO₂ and 
       chips('Methods',a.methods,'m')+chips('Funding',a.funding,'f')+
       '</div>'+plist+'</article>';
   }).join('');
+
+  /* research map: click an area to scroll to it. Inside the Google Sites embed this
+     scrolls the outer page where the browser allows it; if the section is still not
+     on screen afterwards, show it in a panel under the map instead. */
+  var peek=document.getElementById('peek');
+  function closePeek(){peek.hidden=true;peek.innerHTML=''}
+  function openPeek(el){
+    peek.innerHTML='<button class="px" type="button" aria-label="Close">✕</button>';
+    var c=el.cloneNode(true);c.removeAttribute('id');c.classList.remove('hit');peek.appendChild(c);
+    peek.querySelector('.px').addEventListener('click',closePeek);peek.hidden=false;peek.scrollTop=0;
+  }
+  function goArea(id){
+    var el=document.getElementById('area-'+id);if(!el)return;
+    closePeek();
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+    el.classList.add('hit');setTimeout(function(){el.classList.remove('hit')},2000);
+    if('IntersectionObserver' in window)setTimeout(function(){
+      var io=new IntersectionObserver(function(es){io.disconnect();if(!es[0].isIntersecting)openPeek(el)});io.observe(el);
+    },1600);
+  }
+  document.querySelectorAll('#hubmap [data-a]').forEach(function(n){
+    n.addEventListener('click',function(){goArea(n.getAttribute('data-a'))});
+    n.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();goArea(n.getAttribute('data-a'))}});
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closePeek()});
 
 })();
 document.querySelectorAll('.showmail').forEach(function(b){
